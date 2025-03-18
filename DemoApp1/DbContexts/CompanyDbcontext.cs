@@ -20,16 +20,16 @@ namespace DemoApp1.DbContexts
         }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("Server= .; Database = CompanyDb;Trusted_Connection=true;Encrypt=False");
+            optionsBuilder.UseLazyLoadingProxies().UseSqlServer("Server= .; Database = CompanyDb;Trusted_Connection=true;Encrypt=False");
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-           // modelBuilder.ApplyConfiguration<Emplyee>(new EmplyeeConfigration());
-           modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+            modelBuilder.ApplyConfiguration<Emplyee>(new EmplyeeConfigration());
+           // modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
             //modelBuilder.Entity<Emplyee>()
-            //    .HasOne(E => E.ManageDepartment)
+            //    .HasOne(E => E.Department)
             //    .WithOne(D => D.Manager)
-            //    .HasForeignKey<Department>(D => D.DepartmentManagerId)
+            //    .HasForeignKey<Department>(D => D.DepartmentManagerId);
 
 
             //modelBuilder.Entity<Emplyee>()
@@ -40,37 +40,40 @@ namespace DemoApp1.DbContexts
             //    .IsRequired(true);
 
 
-            //modelBuilder.Entity<Department>()
-            //    .HasMany(D => D.Employees)
-            //    .WithOne(/*E => E.Department*/);
+            modelBuilder.Entity<Department>()
+                .HasMany(D => D.Employees)
+                .WithOne(/*E => E.Department*/);
 
-            //modelBuilder.Entity<Emplyee>()
-            //    .HasOne(E => E.Department)
-            //    .WithMany(D => D.Employees);
+            modelBuilder.Entity<Emplyee>()
+                .HasOne(E => E.Department)
+                .WithMany(D => D.Employees)
+                .IsRequired(false)
+                .HasForeignKey(E => E.DepartmentId);
 
-            //modelBuilder.Entity<Course>()
-            // .HasMany(c => c.studentCourses)
-            // .WithOne(sc => sc.Course);
+            modelBuilder.Entity<Course>()
+             .HasMany(c => c.studentCourses)
+             .WithOne(sc => sc.Course);
 
-            //modelBuilder.Entity<Student>()
-            //    .HasMany(s => s.studentCourses)
-            //    .WithOne(sc => sc.Student);
+            modelBuilder.Entity<Student>()
+                .HasMany(s => s.studentCourses)
+                .WithOne(sc => sc.Student);
 
             modelBuilder.Entity<StudentCourse>()
                 .HasKey(Sc => new { Sc.StudentId, Sc.CourseId });
+            modelBuilder.Entity<EmployeeDepartment>().ToView("EmployeeDepartmentView");
 
-            modelBuilder.Entity<FullTime>()
-                .Property(F => F.Salary)
-                .HasColumnType("decimal (18,3)");
+            //modelBuilder.Entity<FullTime>()
+            //    .Property(F => F.Salary)
+            //    .HasColumnType("decimal (18,3)");
 
-            modelBuilder.Entity<PartTime>()
-                .Property(P => P.HourRate)
-                .HasColumnType("decimal (18,4)");
-            modelBuilder.Entity<FullTime>()
-                .HasBaseType<Employee>();
+            //modelBuilder.Entity<PartTime>()
+            //    .Property(P => P.HourRate)
+            //    .HasColumnType("decimal (18,4)");
+            //modelBuilder.Entity<FullTime>()
+            //    .HasBaseType<Employee>();
 
-            modelBuilder.Entity<PartTime>()
-                .HasBaseType<Employee>();
+            //modelBuilder.Entity<PartTime>()
+            //    .HasBaseType<Employee>();
                
 
 
@@ -82,8 +85,9 @@ namespace DemoApp1.DbContexts
         public DbSet<Course> courses { get; set; }
        // public DbSet<StudentCourse> studentCourses { get; set; }
         public DbSet<Student> students { get; set; } //علشان يعمل table في الداتا عندي 
-        public DbSet<FullTime> FullTimeEmployee { get; set; }
-        public DbSet<PartTime> PartTimeEmplyee { get; set; }
+        //public DbSet<FullTime> FullTimeEmployee { get; set; }
+        //public DbSet<PartTime> PartTimeEmplyee { get; set; }
+        public DbSet<EmployeeDepartment> EmployeeDepartments { get; set; }
 
     }
 }

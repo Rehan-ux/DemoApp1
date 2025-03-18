@@ -10,7 +10,7 @@ namespace DemoApp1.Models
     {
         public int Id { get; set; }
         public string Title { get; set; }
-        public ICollection<StudentCourse> studentCourses { get; set; }
+        public virtual ICollection<StudentCourse> studentCourses { get; set; }
         //public ICollection<Student> Students { get; set; } = new List<Student>();
         //public string? description { get; set; }
         //public int? duration { get; set; }

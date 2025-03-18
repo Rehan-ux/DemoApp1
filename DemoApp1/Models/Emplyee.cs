@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
+using System.Runtime.InteropServices.Marshalling;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -22,7 +23,7 @@ namespace DemoApp1.Models
     [Table("Emplyees")]
     internal class Emplyee
     {
-        //[Key]
+        [Key]
         public int EmpId { get; set; }
        // [Column("EmplyeeName",TypeName ="Varchar")]
        // [MaxLength(50)]
@@ -30,7 +31,7 @@ namespace DemoApp1.Models
        // [Column("EmplyeeSalary")]
         public decimal Salary { get; set; }
         
-        public int Age { get; set; }
+        public int? Age { get; set; }
 
         [DataType(DataType.PhoneNumber)]
 
@@ -44,13 +45,21 @@ namespace DemoApp1.Models
 
         //navigation property [one]
         //Ef core : Emplyee may have manage department or not [partial participation]
-        [InverseProperty("Manager")]
-        public Department? ManageDepartment { get; set; }
+     
+       [InverseProperty("Manager")] //manger
+       
+
+       public virtual Department? ManagerDepartment { get; set; }
+       
         public int? DepartmentId {  get; set; } 
         //navigation proparty [one]
-       // [InverseProperty("Emplyee")]
+       
+
+       [InverseProperty("Emplyee")]
+       
+       
        // [ForeignKey("Hamada")] //لوعايز اغير اسم ID وملوش تاثير علي الاتا 
-       public Department Department { get; set; }
+       public virtual Department ?Department { get; set; }
 
 
 

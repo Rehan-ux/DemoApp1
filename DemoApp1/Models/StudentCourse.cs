@@ -14,7 +14,7 @@ namespace DemoApp1.Models
 
         public int CourseId { get; set; }
         public int Crad { get; set; }
-        public Student Student { get; set; }
-        public Course Course { get; set; }  //دي بتاعت ال one ممكن اكتبها وممكن لا 
+        public virtual Student Student { get; set; }
+        public virtual Course Course { get; set; }  //دي بتاعت ال one ممكن اكتبها وممكن لا 
     }
 }

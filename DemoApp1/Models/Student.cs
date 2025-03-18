@@ -15,6 +15,6 @@ namespace DemoApp1.Models
         public int? Age { get; set; }
         // public int DepartmentId { get; set; }
         //public ICollection<Course> Courses { get; set; }
-        public ICollection<StudentCourse> studentCourses { get; set; }
+        public virtual ICollection<StudentCourse> studentCourses { get; set; }
     }
 }
