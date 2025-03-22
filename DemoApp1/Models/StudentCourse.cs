@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace DemoApp1.Models
 {
     [PrimaryKey(nameof(StudentId),nameof(CourseId))]
-    internal class StudentCourse
+    public class StudentCourse
     {
         public int StudentId { get; set; }
 

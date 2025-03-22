@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace DemoApp1.Models
 {
    // [Table("Department")]
-    internal class Department
+    public class Department
     {
        // [Key]
         public int  DepartmentId { get; set; }
@@ -27,13 +27,10 @@ namespace DemoApp1.Models
         [InverseProperty("ManagerDepartment")]
         
         public virtual Emplyee Manager { get; set; }
-        public Address Address { get; set; }
+        public string Address { get; set; }
         // navigation property [many]
-        
-        [InverseProperty("Department")]
-        
-        
-       public virtual ICollection<Emplyee> Employees { get; set; } = new HashSet<Emplyee>(); //الموظفين اللي شغالين عندي فيEmplyee
+
+        public virtual ICollection<Emplyee> Employees { get; set; }  //الموظفين اللي شغالين عندي فيEmplyee
         //public Department()
         //{
         //   Employees=new HashSet<Emplyee>();

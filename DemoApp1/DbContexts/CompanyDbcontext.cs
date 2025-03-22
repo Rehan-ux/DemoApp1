@@ -24,8 +24,8 @@ namespace DemoApp1.DbContexts
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.ApplyConfiguration<Emplyee>(new EmplyeeConfigration());
-           // modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+            modelBuilder.ApplyConfiguration(new EmplyeeConfigration());
+           modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
             //modelBuilder.Entity<Emplyee>()
             //    .HasOne(E => E.Department)
             //    .WithOne(D => D.Manager)
@@ -33,22 +33,22 @@ namespace DemoApp1.DbContexts
 
 
             //modelBuilder.Entity<Emplyee>()
-            //    .HasOne<Department>()
-            //    .WithOne()
             //    .HasForeignKey<Department>(D => D.DepartmentManagerId)
             //.OnDelete(DeleteBehavior.NoAction)
+            //    .HasOne<Department>()
+            //    .WithOne()
             //    .IsRequired(true);
 
 
-            modelBuilder.Entity<Department>()
-                .HasMany(D => D.Employees)
-                .WithOne(/*E => E.Department*/);
+            //modelBuilder.Entity<Department>()
+            //    .HasMany(D => D.Employees)
+            //    .WithOne(E => E.Department);
 
-            modelBuilder.Entity<Emplyee>()
-                .HasOne(E => E.Department)
-                .WithMany(D => D.Employees)
-                .IsRequired(false)
-                .HasForeignKey(E => E.DepartmentId);
+            //modelBuilder.Entity<Emplyee>()
+            //    .HasOne(E => E.Department)
+            //    .WithMany(D => D.Employees)
+            //    .IsRequired(false)
+            //    .HasForeignKey(E => E.DepartmentId);
 
             modelBuilder.Entity<Course>()
              .HasMany(c => c.studentCourses)
@@ -74,10 +74,10 @@ namespace DemoApp1.DbContexts
 
             //modelBuilder.Entity<PartTime>()
             //    .HasBaseType<Employee>();
-               
 
 
-           base.OnModelCreating(modelBuilder);
+
+            base.OnModelCreating(modelBuilder);
         }
         public DbSet<Emplyee>? Employees { get; set; }
         public DbSet<Department>? departments { get; set; }

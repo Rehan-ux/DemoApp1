@@ -2,16 +2,20 @@
 using DemoApp1.InheritanceExamaple.Entities;
 using DemoApp1.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Internal;
 using Microsoft.VisualBasic;
+using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace DemoApp1
 {
     internal class Program
     {
+        
+
         static void Main(string[] args)
         {
-           using CompanyDbcontext dbcontext = new CompanyDbcontext();
+            //using CompanyDbcontext dbcontext = new CompanyDbcontext();
             //using CompanyDbcontext dbcontext = new CompanyDbcontext();
             #region
             //FullTime full = new FullTime()
@@ -106,11 +110,154 @@ namespace DemoApp1
             #endregion
             #region Mapping
             //var Result = dbcontext.EmployeeDepartments.FromSqlRaw("Select * from EmployeeDepartmentView");
-            foreach (var item in dbcontext.EmployeeDepartments)
-            {
-                Console.WriteLine($"Empolyee :{item.EmpName},Department:{item.DeptName}");
-            }
+            //foreach (var item in dbcontext.EmployeeDepartments)
+            //{
+            //    Console.WriteLine($"Empolyee :{item.EmpName},Department:{item.DeptName}");
+            //}
+            #endregion
+            #region session 5 join[inner]
+            //query syntax
+            //var result = from E in dbcontext.Employees
+            //             join D in dbcontext.departments
+            //             on E.DepartmentId equals D.DepartmentId
+            //             where E.Salary >= 5000
+            //             select new
+            //             {
+            //                 EmpName = E.Name,
+            //                 DeptName = D.Name
+
+            //             };
+            //foreach(var item in result)
+            //{
+            //    Console.WriteLine(item);
+            //}
+            //fluentSyntax
+            //var result = dbcontext.Employees.Join(dbcontext.departments, E => E.DepartmentId, D => D.DepartmentId,
+            //                   (E, D) => new
+            //                   {
+            //                       EmpName = E.Name,
+            //                       DeptName = D.Name,
+            //                       salary =E.Salary,
+
+            //                   }).Where(A => A.salary > 3000);
+            //foreach (var item in result)
+            //{
+            //    Console.WriteLine(item);
+            //}
+
+            #endregion
+            #region GroupJoin_ Left outer jion 
+            //var Result = dbcontext.departments.GroupJoin(dbcontext.Employees, D => D.DepartmentId,
+            //          E => E.DepartmentId, (D, E) => new
+            //          {
+            //              Department = D,
+            //              Employees = E
+            //          });
+
+            //Query
+            //var Result = from D in dbcontext.departments
+            //             join E in dbcontext.Employees
+            //             on D.DepartmentId equals E.DepartmentId into Groups
+            //             select new
+            //             {
+            //                 Department = D,
+            //                 Employees = Groups
+            //             };
+
+            //foreach (var result in Result)
+            //{
+            //    Console.WriteLine($"DeptName = {result.Department.Name}");
+            //    foreach(var item in result.Employees)
+            //    {
+            //        Console.WriteLine(item.Name);
+            //    }
+            //}
+
+
+            //Example2
+
+            //var Result = dbcontext.departments.GroupJoin(dbcontext.Employees, D => D.DepartmentId, E => E.DepartmentId,
+            //               (Department, Emplyee) => new
+            //               {
+            //                   Department =Department,
+            //                   Emplyees = Emplyee
+
+            //               }).Where(A=>A.Emplyees.Count()>1);
+
+            //Query
+            //var Result = from D in dbcontext.departments
+            //             join E in dbcontext.Employees
+            //             on D.DepartmentId equals E.DepartmentId into Groups
+            //             select new
+            //             {
+            //                 Department = D,
+            //                 Emplyees = Groups
+            //             } into Group
+            //             where Group.Emplyees.Count() > 1
+            //             select Group;
+
+            //foreach (var item  in Result)
+            //{
+            //    Console.WriteLine(item.Department.Name);
+            //    foreach(var item3 in item.Emplyees)
+            //    {
+            //        Console.WriteLine(item3.Name);
+            //    }
+            //}
+            //Ea\xample 3 leftJoin
+            //var Result = dbcontext.departments.LeftJoin(dbcontext.Employees, D => D.DepartmentId, E => E.DepartmentId
+            //            (D, E) => new
+            //            {
+            //                 Dept=D,
+            //                 Emp=E
+            //            }); 
+            //foreach (var item in Result)
+            //{
+            //    Console.WriteLine(item);
+            //}
+
+
+            #endregion
+            #region [Group Join Right outer Join]
+            //var result = dbcontext.Employees.GroupJoin(dbcontext.departments ,E=>E.DepartmentId,D=>D.DepartmentId,
+            //                   (D, E) => new
+            //                   {
+            //                       Department = D,
+            //                       Empolyees=E
+
+            //                   });
+            //foreach (var item1 in result)
+            //{
+            //    Console.WriteLine(item1.Empolyees);
+            //    foreach(var item2 in item1.Department.EmpName)
+            //    {
+            //        Console.WriteLine(item2);
+            //    }
+            //}
+            #endregion
+            #region  Cross Join
+            //var result = from E in dbcontext.Employees
+            //             from D in dbcontext.departments
+            //             select new
+            //             {
+            //                 E.Name,
+            //                deptName= D.Name
+            //             };
+            ////fluent
+            //result = dbcontext.Employees.SelectMany(E=>dbcontext.departments.Select(D => new
+            //{
+            //    E.Name,
+            //    deptName=D.Name
+            //}));
+            //foreach (var  item in result)
+            //{
+            //    Console.WriteLine(item);   
+            //}
+            #endregion
+            #region
+            
             #endregion
         }
     }
 }
+            

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DemoApp1.InheritanceExamaple.Entities
 {
-    internal class PartTime :Employee
+    internal class PartTime :Employeed
 
     {
         public decimal HourRate { get; set; }

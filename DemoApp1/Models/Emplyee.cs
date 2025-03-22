@@ -21,8 +21,10 @@ namespace DemoApp1.Models
     //}
     #region DataAnnotation
     [Table("Emplyees")]
-    internal class Emplyee
+    public class Emplyee
     {
+        internal object Name;
+
         [Key]
         public int EmpId { get; set; }
        // [Column("EmplyeeName",TypeName ="Varchar")]
@@ -51,15 +53,15 @@ namespace DemoApp1.Models
 
        public virtual Department? ManagerDepartment { get; set; }
        
-        public int? DepartmentId {  get; set; } 
+        public int? DepartmentId {  get; set; }
         //navigation proparty [one]
-       
 
-       [InverseProperty("Emplyee")]
-       
-       
-       // [ForeignKey("Hamada")] //لوعايز اغير اسم ID وملوش تاثير علي الاتا 
-       public virtual Department ?Department { get; set; }
+
+        [InverseProperty("Employees")]
+
+
+        // [ForeignKey("Hamada")] //لوعايز اغير اسم ID وملوش تاثير علي الاتا 
+        public virtual Department ?Department { get; set; }
 
 
 
